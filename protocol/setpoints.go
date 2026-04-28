@@ -83,3 +83,9 @@ func (d *DMC41x3) SetSmoothing(axis rune, constant float64) error {
 	cmd := fmt.Sprintf("KS%c=%f", axis, constant)
 	return d.WriteCommand(cmd)
 }
+
+// Defines the value of the current position
+func (d *DMC41x3) DefinePosition(axis rune, position float64) error {
+	cmd := fmt.Sprintf("DP%c=%f", axis, position)
+	return d.WriteCommand(cmd)
+}
