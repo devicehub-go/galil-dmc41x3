@@ -1,4 +1,4 @@
-module github.com/devicehub-go/galil-dmc
+module github.com/devicehub-go/galil-dmc41x3
 
 go 1.25.4
 
