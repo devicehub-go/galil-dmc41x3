@@ -1,6 +1,10 @@
 package protocol
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+	"strings"
+)
 
 type DataRecordInfo struct {
 	NumberAxes                   int
@@ -27,11 +31,19 @@ func (d *DMC41x3) GetDataRecordInformation() (DataRecordInfo, error) {
 	if err != nil {
 		return DataRecordInfo{}, nil
 	}
-	responseBytes := []byte(response)
+	values := strings.Split(strings.TrimSpace(response), ", ")
+	if len(values) < 4 {
+		return DataRecordInfo{}, fmt.Errorf("invalid response, got %s", response)
+	}
+	numberAxes, _ := strconv.Atoi(values[0])
+	numberBytesInGB, _ := strconv.Atoi(values[1])
+	numberBytesInCB, _ := strconv.Atoi(values[2])
+	numberBytesInAB, _ := strconv.Atoi(values[3])
+
 	return DataRecordInfo{
-		NumberAxes:                   int(responseBytes[0]),
-		NumberBytesInGeneralBlock:    int(responseBytes[1]),
-		NumberBytesInCoordinateBlock: int(responseBytes[2]),
-		NumberBytesInAxisBlock:       int(responseBytes[3]),
+		NumberAxes:                   numberAxes,
+		NumberBytesInGeneralBlock:    numberBytesInGB,
+		NumberBytesInCoordinateBlock: numberBytesInCB,
+		NumberBytesInAxisBlock:       numberBytesInAB,
 	}, nil
 }

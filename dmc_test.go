@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	galil "github.com/devicehub-go/galil-dmc41x3"
+	galil "github.com/devicehub-go/galil-dmc"
 	"github.com/devicehub-go/unicomm"
 	"github.com/devicehub-go/unicomm/protocol/unicommtcp"
 )
@@ -14,7 +14,7 @@ func TestConnection(t *testing.T) {
 	DMC41x3 := galil.New(unicomm.Options{
 		Protocol: unicomm.TCP,
 		TCP: unicommtcp.TCPOptions{
-			Host:         "10.0.4.194",
+			Host:         "10.0.9.60",
 			Port:         23,
 			ReadTimeout:  2 * time.Second,
 			WriteTimeout: 2 * time.Second,
@@ -25,6 +25,6 @@ func TestConnection(t *testing.T) {
 	}
 	defer DMC41x3.Disconnect()
 
-	fmt.Println(DMC41x3.QueryFloat64("MG _LRA"))
-
+	fmt.Println(DMC41x3.GetErrorCode(1))
+	fmt.Println(DMC41x3.GetRecord())
 }

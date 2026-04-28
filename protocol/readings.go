@@ -85,7 +85,7 @@ func (d *DMC41x3) GetSwitches(axis rune) (int, error) {
 // Returns the active state of forward limit switch
 func (d *DMC41x3) IsForwardSwitchOn(axis rune) (bool, error) {
 	cmd := fmt.Sprintf("MG _LF%c", axis)
-	response, err := d.QueryInt(cmd)
+	response, err := d.QueryFloat64(cmd)
 	if err != nil {
 		return false, err
 	}
@@ -95,7 +95,7 @@ func (d *DMC41x3) IsForwardSwitchOn(axis rune) (bool, error) {
 // Returns the active state of reverse limit switch
 func (d *DMC41x3) IsReverseSwitchOn(axis rune) (bool, error) {
 	cmd := fmt.Sprintf("MG _LR%c", axis)
-	response, err := d.QueryInt(cmd)
+	response, err := d.QueryFloat64(cmd)
 	if err != nil {
 		return false, err
 	}
@@ -105,7 +105,7 @@ func (d *DMC41x3) IsReverseSwitchOn(axis rune) (bool, error) {
 // Returns the active state of home switch
 func (d *DMC41x3) IsHomeSwitchOn(axis rune) (bool, error) {
 	cmd := fmt.Sprintf("MG _HM%c", axis)
-	response, err := d.QueryInt(cmd)
+	response, err := d.QueryFloat64(cmd)
 	if err != nil {
 		return false, err
 	}
@@ -115,7 +115,7 @@ func (d *DMC41x3) IsHomeSwitchOn(axis rune) (bool, error) {
 // Returns the moving status
 func (d *DMC41x3) IsMoving(axis rune) (bool, error) {
 	cmd := fmt.Sprintf("MG _BG%c", axis)
-	response, err := d.QueryInt(cmd)
+	response, err := d.QueryFloat64(cmd)
 	if err != nil {
 		return false, err
 	}
@@ -148,6 +148,7 @@ func (d *DMC41x3) GetRecord() (map[rune]AxisRecord, error) {
 	records := make(map[rune]AxisRecord)
 	axesNames := []rune{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'}
 
+	fmt.Println(info)
 	offset := info.NumberBytesInGeneralBlock
 	for i := 0; i < info.NumberAxes; i++ {
 		axisData := data[offset : offset+info.NumberBytesInAxisBlock]
