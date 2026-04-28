@@ -1,7 +1,7 @@
 package galildmc41x3
 
 import (
-	"github.com/devicehub-go/galil-dmc/protocol"
+	"github.com/devicehub-go/galil-dmc41x3/protocol"
 	"github.com/devicehub-go/unicomm"
 )
 

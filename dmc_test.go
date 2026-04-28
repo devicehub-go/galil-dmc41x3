@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	galil "github.com/devicehub-go/galil-dmc"
+	galil "github.com/devicehub-go/galil-dmc41x3"
 	"github.com/devicehub-go/unicomm"
 	"github.com/devicehub-go/unicomm/protocol/unicommtcp"
 )

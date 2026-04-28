@@ -148,7 +148,6 @@ func (d *DMC41x3) GetRecord() (map[rune]AxisRecord, error) {
 	records := make(map[rune]AxisRecord)
 	axesNames := []rune{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'}
 
-	fmt.Println(info)
 	offset := info.NumberBytesInGeneralBlock
 	for i := 0; i < info.NumberAxes; i++ {
 		axisData := data[offset : offset+info.NumberBytesInAxisBlock]
