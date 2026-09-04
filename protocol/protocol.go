@@ -71,14 +71,20 @@ func (d *DMC41x3) read() ([]byte, error) {
 			break
 		}
 		if b[0] == '?' {
-			return nil, errors.New("command rejected, consult GetErrorCode")
+			if err := d.write("TC 1"); err != nil {
+				return nil, errors.New("command rejected: error on request error code")
+			}
+			response, err := d.read()
+			if err != nil {
+				return nil, errors.New("command rejected: error on read error code")
+			}
+			return nil, fmt.Errorf("command rejected: %s", string(response))
 		}
 		response = append(response, b[0])
 	}
 	return response, nil
 }
 
-// WriteCommand envia um comando que não espera retorno de dados, apenas confirmação
 func (d *DMC41x3) WriteCommand(command string) error {
 	d.mutex.Lock()
 	defer d.mutex.Unlock()
@@ -90,7 +96,6 @@ func (d *DMC41x3) WriteCommand(command string) error {
 	return err
 }
 
-// Query solicita uma resposta em string do controlador
 func (d *DMC41x3) Query(command string) (string, error) {
 	d.mutex.Lock()
 	defer d.mutex.Unlock()
