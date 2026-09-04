@@ -71,14 +71,7 @@ func (d *DMC41x3) read() ([]byte, error) {
 			break
 		}
 		if b[0] == '?' {
-			if err := d.write("TC 1"); err != nil {
-				return nil, errors.New("command rejected: error on request error code")
-			}
-			response, err := d.read()
-			if err != nil {
-				return nil, errors.New("command rejected: error on read error code")
-			}
-			return nil, fmt.Errorf("command rejected: %s", string(response))
+			return nil, errors.New("command rejected, consult GetErrorCode")
 		}
 		response = append(response, b[0])
 	}
